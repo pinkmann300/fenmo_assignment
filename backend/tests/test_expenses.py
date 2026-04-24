@@ -106,6 +106,11 @@ def test_zero_amount_rejected():
     assert res.status_code == 422
 
 
+def test_future_date_rejected():
+    res = client.post("/expenses", json={"amount": 50, "category": "Other", "date": "2099-12-31"})
+    assert res.status_code == 422
+
+
 def test_categories_endpoint():
     res = client.get("/expenses/categories")
     assert res.status_code == 200

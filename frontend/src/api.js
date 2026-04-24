@@ -6,7 +6,9 @@ function parseDetail(detail) {
   if (typeof detail === "string") return detail;
   // Pydantic returns detail as an array of error objects on 422
   if (Array.isArray(detail)) {
-    return detail.map((e) => e.msg ?? JSON.stringify(e)).join("; ");
+    return detail
+      .map((e) => (e.msg ?? JSON.stringify(e)).replace(/^value error,\s*/i, ""))
+      .join("; ");
   }
   return String(detail);
 }

@@ -40,6 +40,7 @@ export default function ExpenseForm({ onCreated }) {
     if (!form.amount || isNaN(amount) || amount <= 0)
       return "Amount must be a positive number.";
     if (!form.date) return "Date is required.";
+    if (form.date > today()) return "Date cannot be in the future.";
     return "";
   }
 
@@ -130,6 +131,7 @@ export default function ExpenseForm({ onCreated }) {
           name="date"
           type="date"
           value={form.date}
+          max={today()}
           onChange={handleChange}
           required
           disabled={submitting}

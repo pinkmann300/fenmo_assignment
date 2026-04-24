@@ -1,6 +1,6 @@
 from decimal import Decimal, ROUND_HALF_UP
 from pydantic import BaseModel, field_validator
-from datetime import date as DateType
+from datetime import date as DateType, date
 from typing import Optional
 
 
@@ -30,6 +30,13 @@ class ExpenseCreate(BaseModel):
     @classmethod
     def strip_description(cls, v: Optional[str]) -> str:
         return (v or "").strip()
+
+    @field_validator("date")
+    @classmethod
+    def date_not_in_future(cls, v: DateType) -> DateType:
+        if v > date.today():
+            raise ValueError("date cannot be in the future")
+        return v
 
 
 class ExpenseResponse(BaseModel):
