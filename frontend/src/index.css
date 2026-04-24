@@ -99,6 +99,13 @@ body {
   letter-spacing: 0.04em;
 }
 
+.optional {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 0.75rem;
+}
+
 input, select {
   border: 1px solid var(--border);
   border-radius: 6px;

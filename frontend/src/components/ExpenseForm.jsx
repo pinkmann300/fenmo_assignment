@@ -40,7 +40,6 @@ export default function ExpenseForm({ onCreated }) {
     if (!form.amount || isNaN(amount) || amount <= 0)
       return "Amount must be a positive number.";
     if (!form.date) return "Date is required.";
-    if (!form.description.trim()) return "Description is required.";
     return "";
   }
 
@@ -112,7 +111,7 @@ export default function ExpenseForm({ onCreated }) {
       </div>
 
       <div className="form-row">
-        <label htmlFor="description">Description</label>
+        <label htmlFor="description">Description <span className="optional">(optional)</span></label>
         <input
           id="description"
           name="description"
@@ -120,7 +119,6 @@ export default function ExpenseForm({ onCreated }) {
           placeholder="What did you spend on?"
           value={form.description}
           onChange={handleChange}
-          required
           disabled={submitting}
         />
       </div>

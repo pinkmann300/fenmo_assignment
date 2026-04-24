@@ -1,5 +1,5 @@
 from decimal import Decimal, ROUND_HALF_UP
-from pydantic import BaseModel, field_validator, model_validator
+from pydantic import BaseModel, field_validator
 from datetime import date as DateType
 from typing import Optional
 
@@ -7,7 +7,7 @@ from typing import Optional
 class ExpenseCreate(BaseModel):
     amount: Decimal
     category: str
-    description: str
+    description: Optional[str] = ""
     date: DateType
 
     @field_validator("amount")
@@ -26,13 +26,10 @@ class ExpenseCreate(BaseModel):
             raise ValueError("category cannot be empty")
         return v
 
-    @field_validator("description")
+    @field_validator("description", mode="before")
     @classmethod
-    def description_not_empty(cls, v: str) -> str:
-        v = v.strip()
-        if not v:
-            raise ValueError("description cannot be empty")
-        return v
+    def strip_description(cls, v: Optional[str]) -> str:
+        return (v or "").strip()
 
 
 class ExpenseResponse(BaseModel):

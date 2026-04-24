@@ -90,13 +90,19 @@ def test_total_matches_expenses():
     assert Decimal(str(body["total"])) == computed
 
 
+def test_description_is_optional():
+    res = client.post("/expenses", json={"amount": 10, "category": "Other", "date": "2024-02-01"})
+    assert res.status_code == 201
+    assert res.json()["description"] == ""
+
+
 def test_negative_amount_rejected():
-    res = client.post("/expenses", json={"amount": -10, "category": "Food & Dining", "description": "X", "date": "2024-01-01"})
+    res = client.post("/expenses", json={"amount": -10, "category": "Food & Dining", "date": "2024-01-01"})
     assert res.status_code == 422
 
 
 def test_zero_amount_rejected():
-    res = client.post("/expenses", json={"amount": 0, "category": "Food & Dining", "description": "X", "date": "2024-01-01"})
+    res = client.post("/expenses", json={"amount": 0, "category": "Food & Dining", "date": "2024-01-01"})
     assert res.status_code == 422
 
 
