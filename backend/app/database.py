@@ -2,7 +2,7 @@ import sqlite3
 import os
 from pathlib import Path
 
-DATABASE_PATH = os.getenv("DATABASE_PATH", "/tmp/expenses.db")
+DATABASE_PATH = os.getenv("DATABASE_PATH", str(Path(__file__).parent.parent / "expenses.db"))
 
 # Ensure the parent directory exists (important on Render when using a mounted disk)
 Path(DATABASE_PATH).parent.mkdir(parents=True, exist_ok=True)
